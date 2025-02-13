@@ -4,14 +4,14 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.example.newsdata.core.presentation.ui.theme.NewsDataTheme
+import com.example.newsdata.news.presentation.NewsScreenCore
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,29 +19,33 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             NewsDataTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                Navigation()
             }
         }
     }
-}
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+    @Composable
+    fun Navigation(modifier: Modifier = Modifier) {
+        val navController = rememberNavController()
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    NewsDataTheme {
-        Greeting("Android")
+        NavHost(
+            navController = navController,
+            startDestination = Screen.News
+        ) {
+
+            composable<Screen.News> {
+                NewsScreenCore {
+                    navController.navigate(Screen.Article(it))
+                }
+
+            }
+
+            composable<Screen.Article> { backStackEntry ->
+                val article: Screen.Article = backStackEntry.toRoute()
+                article.articleId
+
+            }
+        }
     }
+
 }

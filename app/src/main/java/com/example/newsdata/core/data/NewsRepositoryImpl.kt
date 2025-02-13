@@ -13,6 +13,7 @@ import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
+import io.ktor.utils.io.CancellationException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
@@ -32,6 +33,7 @@ class NewsRepositoryImpl(
 
     // API key stored in BuildConfig (to keep it secure)
     private val apiKey = BuildConfig.NEWS_API_KEY
+
 
     /**
      * Fetches news articles from the local database.
@@ -76,6 +78,7 @@ class NewsRepositoryImpl(
                 getRemoteNews(null) // Fetch first page
             } catch (e: Exception) {
                 e.printStackTrace()
+                if (e is CancellationException) throw e
                 println(tag + "getNews remote exception: " + e.message)
                 null // Return null if network request fails
             }
@@ -104,7 +107,7 @@ class NewsRepositoryImpl(
      * Fetches the next page of news articles from the remote API.
      * @param nextPage The page number to fetch.
      */
-    override suspend fun paginate(nextPage: String): Flow<NewsResult<NewsList>> {
+    override suspend fun paginate(nextPage: String?): Flow<NewsResult<NewsList>> {
         return flow {
             // Attempt to fetch data from the remote API for the given page
             val remoteNewsList = try {
@@ -127,7 +130,6 @@ class NewsRepositoryImpl(
             }
         }
     }
-
     /*override suspend fun getArticle(articleId: String): Flow<NewsResult<NewsList>> {
         TODO("Not yet implemented")
     }*/
