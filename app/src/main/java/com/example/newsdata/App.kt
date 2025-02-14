@@ -1,6 +1,7 @@
 package com.example.newsdata
 
 import android.app.Application
+import com.example.newsdata.article.di.articleModule
 import com.example.newsdata.core.di.coreModule
 import com.example.newsdata.news.di.newsModule
 import org.koin.android.ext.koin.androidContext
@@ -16,7 +17,11 @@ class App: Application() {
                 androidLogger() // Enable Koin logging in debug mode
             }
             androidContext(this@App)
-            modules(coreModule, newsModule)
+            modules(
+                coreModule,
+                newsModule,
+                articleModule
+            )
         }
     }
 }

@@ -20,6 +20,6 @@ interface NewsRepository {
      * @return A [Flow] emitting [NewsResult] containing the next batch of articles or an error.
      */
     suspend fun paginate(nextPage: String?): Flow<NewsResult<NewsList>>
-    //suspend fun getArticle(articleId:String): Flow<NewsResult<NewsList>>
+    suspend fun getArticle(articleId:String): Flow<NewsResult<Article>>
 
 }

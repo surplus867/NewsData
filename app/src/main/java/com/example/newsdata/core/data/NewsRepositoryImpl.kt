@@ -3,6 +3,7 @@ package com.example.newsdata.core.data
 import com.example.newsdata.BuildConfig
 import com.example.newsdata.core.data.local.ArticlesDao
 import com.example.newsdata.core.data.remote.NewsListDto
+import com.example.newsdata.core.domain.Article
 import com.example.newsdata.core.domain.NewsList
 import com.example.newsdata.core.domain.NewsRepository
 import com.example.newsdata.core.domain.NewsResult
@@ -93,7 +94,7 @@ class NewsRepositoryImpl(
 
             // If remote fetch failed, attempt to use local data
             val localNewsList = getLocalNews(null)
-            if(localNewsList.articles.isNotEmpty()) {
+            if (localNewsList.articles.isNotEmpty()) {
                 emit(NewsResult.Success(localNewsList))
                 return@flow
             }
@@ -121,7 +122,7 @@ class NewsRepositoryImpl(
             // If remote data is available, store it and emit it
             remoteNewsList?.let {
                 dao.clearDatabase()
-                dao.upsertArticleList(remoteNewsList.articles.map { it.toArticleEntity()})
+                dao.upsertArticleList(remoteNewsList.articles.map { it.toArticleEntity() })
 
                 // not getting them from the database like getNews()
                 // because we will also get old items that we already have before paginating
@@ -130,7 +131,36 @@ class NewsRepositoryImpl(
             }
         }
     }
-    /*override suspend fun getArticle(articleId: String): Flow<NewsResult<NewsList>> {
-        TODO("Not yet implemented")
-    }*/
+
+    override suspend fun getArticle(articleId: String): Flow<NewsResult<Article>> {
+        return flow {
+            dao.getArticle(articleId)?.let { article ->
+                println(tag + "get local article" + article.articleId)
+                emit(NewsResult.Success(article.toArticle()))
+                return@flow
+
+            }
+
+            try {
+                val remoteArticle: NewsListDto = httpClient.get(baseUrl) {
+                    parameter("apikey", apiKey)
+                    parameter("id", articleId)
+                }.body()
+
+                println(tag + "get article remote" + remoteArticle.results?.size)
+
+                if (remoteArticle.results?.isNotEmpty() == true) {
+                    emit(NewsResult.Success(remoteArticle.results[0].toArticle()))
+                } else {
+                    emit(NewsResult.Error("Can't Load Article"))
+                }
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+                if (e is CancellationException) throw e
+                println(tag + "get article remote exception: " + e.message)
+                emit(NewsResult.Error("Can't Load Article"))
+            }
+        }
+    }
 }
