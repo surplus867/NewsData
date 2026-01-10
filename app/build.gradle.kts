@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -5,6 +7,19 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.compose.compiler)
 }
+
+// Compute NEWS_API_KEY from multiple sources (project property, env var, local.properties).
+// If gradle.properties contains a placeholder like ${NEWS_API_KEY}, ignore it.
+val projectProp = (project.findProperty("NEWS_API_KEY") as? String)
+val projectPropValid = projectProp?.takeIf { it.isNotBlank() && !it.contains('$') }
+val newsApiKey: String = projectPropValid
+    ?: System.getenv("NEWS_API_KEY")?.takeIf { it.isNotBlank() }
+    ?: run {
+        val lp = rootProject.file("local.properties")
+        if (lp.exists()) {
+            Properties().apply { load(lp.inputStream()) }.getProperty("NEWS_API_KEY")
+        } else null
+    } ?: ""
 
 android {
     namespace = "com.example.newsdata"
@@ -29,7 +44,7 @@ android {
             buildConfigField(
                 "String",
                 "NEWS_API_KEY",
-                "\"${project.findProperty("NEWS_API_KEY")}\""
+                "\"$newsApiKey\""
             )
         }
         release {
@@ -41,7 +56,7 @@ android {
             buildConfigField(
                 "String",
                 "NEWS_API_KEY",
-                "\"${project.findProperty("NEWS_API_KEY")}\""
+                "\"$newsApiKey\""
             )
         }
     }

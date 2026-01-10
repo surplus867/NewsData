@@ -1,4 +1,4 @@
-package com.example.newsdata.core.data
+                package com.example.newsdata.core.data
 
 import com.example.newsdata.BuildConfig
 import com.example.newsdata.core.data.local.ArticlesDao
