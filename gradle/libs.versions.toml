@@ -1,6 +1,6 @@
 [versions]
 agp = "9.0.0"
-kotlin = "2.2.10"
+kotlin = "2.0.21"
 coreKtx = "1.15.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -16,9 +16,9 @@ ktor = "3.0.3"
 navigationCompose = "2.8.6"
 kotlinxSerializationJson = "1.7.3"
 materialIconsExtended = "1.7.7"
-room = "2.6.1"
+room = "2.7.2"
 # Align KSP to the Kotlin version to avoid KSP/Kotlin mismatch errors
-ksp = "2.2.10"
+ksp = "2.0.21-1.0.26"
 
 [libraries]
 
