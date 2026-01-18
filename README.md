@@ -35,6 +35,10 @@ This project focuses on clean architecture, scalability, and modern Android deve
   <img src="article_details.png" width="280" />
 </p>
 
+<p align="center">
+  News Feed (left) · Article Details (right)
+</p>
+
 ---
 
 ## 🚀 How to Run
