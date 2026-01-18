@@ -9,12 +9,12 @@ This project focuses on clean architecture, scalability, and modern Android deve
 ---
 
 ✨ Features
-🗞 Latest news feed with headlines and images
-📄 Article details screen with full content
-💾 Offline caching using Room database
-🔄 Loading, empty, and error state handling
-🧱 Clean and modular MVVM architecture
-📱 Responsive UI built with Jetpack Compose
+- Latest news feed with headlines and images
+- Article details screen with full content
+- Offline caching using Room database
+- Loading, empty, and error state handling
+- Clean and modular MVVM architecture
+- Responsive UI built with Jetpack Compose
 
 ---
 
