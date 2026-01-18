@@ -28,14 +28,11 @@ This project focuses on clean architecture, scalability, and modern Android deve
 
 ---
 
-## 📱 Screenshots
-
 ### News Feed
-![News Feed](news_feed_1.png)
+<img src="news_feed_1.png" width="300"/>
 
 ### Article Details
-![Article Details](article_details_1.png)
-
+<img src="article_details_1.png" width="300"/>
 
 ---
 
