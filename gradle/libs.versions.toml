@@ -1,6 +1,6 @@
 [versions]
-agp = "8.13.2"
-kotlin = "2.1.0"
+agp = "9.0.0"
+kotlin = "2.2.10"
 coreKtx = "1.15.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -17,7 +17,8 @@ navigationCompose = "2.8.6"
 kotlinxSerializationJson = "1.7.3"
 materialIconsExtended = "1.7.7"
 room = "2.6.1"
-ksp = "2.1.0-1.0.29"
+# Align KSP to the Kotlin version to avoid KSP/Kotlin mismatch errors
+ksp = "2.2.10"
 
 [libraries]
 
@@ -84,5 +85,3 @@ ktor = [
     "ktor-client-serialization-json",
     "ktor-client-logging",
 ]
-
-

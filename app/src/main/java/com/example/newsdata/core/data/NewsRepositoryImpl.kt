@@ -1,4 +1,4 @@
-                package com.example.newsdata.core.data
+package com.example.newsdata.core.data
 
 import com.example.newsdata.BuildConfig
 import com.example.newsdata.core.data.local.ArticlesDao
@@ -58,8 +58,12 @@ class NewsRepositoryImpl(
      */
 
     private suspend fun getRemoteNews(nextPage: String?): NewsList {
+        // Log if apiKey is missing to help debugging locally (don't print the key itself)
+        if (apiKey.isBlank()) println(tag + "Missing NEWS_API_KEY in BuildConfig")
+
         val newsListDto: NewsListDto = httpClient.get(baseUrl) {
-            parameter("apiKey", apiKey) // API ket for authentication
+            // use lowercase 'apikey' to match other requests / API expectations
+            parameter("apikey", apiKey) // API key for authentication
             parameter("language", "en") // Fetch English names only
             if (nextPage != null) parameter("page", nextPage) // Add page parameter if paginating
         }.body()

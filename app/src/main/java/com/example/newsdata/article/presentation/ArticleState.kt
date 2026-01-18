@@ -6,5 +6,6 @@ import com.example.newsdata.core.domain.Article
 data class ArticleState(
     val article: Article? = null,   // The loaded article (if available)
     val isLoading: Boolean = false, // Indicates if data is currently being fetched
-    val isError: Boolean = false    // Indicates if an error occurred
+    val isError: Boolean = false,   // Indicates if an error occurred
+    val errorMessage: String? = null // Optional error message to show in the UI
 )

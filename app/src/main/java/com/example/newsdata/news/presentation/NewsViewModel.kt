@@ -54,7 +54,10 @@ class NewsViewModel(
             newsRepository.getNews().collect { newsResult ->
                 state = when (newsResult) {
                     // If there's an error, updates the state to reflect that.
-                    is NewsResult.Error -> state.copy(isError = true)
+                    is NewsResult.Error -> state.copy(
+                        isError = true,
+                        errorMessage = newsResult.message ?: "Can't Load News"
+                    )
                     // On success, update the articles list and pagination info.
                     is NewsResult.Success -> state.copy(
                             isError = false,

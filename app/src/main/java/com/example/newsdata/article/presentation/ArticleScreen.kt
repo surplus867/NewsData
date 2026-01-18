@@ -70,7 +70,7 @@ private fun ArticleScreen(
                 // Show error message if loading failed
                 state.isError && state.article == null -> {
                     Text(
-                        text = "Can't load articles",
+                        text = state.errorMessage ?: "Can't load articles",
                         fontSize = 20.sp,
                         color = MaterialTheme.colorScheme.error
                     )
@@ -97,9 +97,9 @@ fun ArticleDetails(
             .verticalScroll(rememberScrollState())
             .padding(vertical = 22.dp)
     ) {
-        // Display article source name, fallback to "Unknown Source" if null
+        // Display article source name
         Text(
-            text = article.sourceName ?: "Unknown Source",
+            text = article.sourceName,
             fontSize = 24.sp,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
@@ -111,7 +111,7 @@ fun ArticleDetails(
 
         // Display publication date
         Text(
-            text = article.pubDate ?: "Unknown Date",
+            text = article.pubDate,
             fontSize = 14.sp,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
@@ -122,7 +122,7 @@ fun ArticleDetails(
 
         // Display article title
         Text(
-            text = article.title ?: "No Title",
+            text = article.title,
             fontWeight = FontWeight.SemiBold,
             fontSize = 17.sp,
             modifier = Modifier.padding(horizontal = 16.dp)
@@ -145,7 +145,7 @@ fun ArticleDetails(
 
         //Display article description
         Text(
-            text = article.description ?: "No description available.",
+            text = article.description,
             fontSize = 16.sp,
             fontWeight = FontWeight.SemiBold,
             modifier = Modifier.padding(horizontal = 16.dp)
@@ -173,6 +173,16 @@ private fun ArticleScreenPreview() {
     NewsDataTheme {
         ArticleScreen(
             state = ArticleState()
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun ArticleScreenErrorPreview() {
+    NewsDataTheme {
+        ArticleScreen(
+            state = ArticleState(isError = true, errorMessage = "Preview: Can't load article")
         )
     }
 }

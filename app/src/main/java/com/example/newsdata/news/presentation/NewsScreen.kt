@@ -12,7 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -24,7 +24,6 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MonotonicFrameClock
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
@@ -32,12 +31,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.newsdata.core.domain.Article
@@ -105,7 +102,8 @@ private fun NewsScreen(
 
             if (state.isError && state.articleList.isEmpty()) {
                 Text(
-                    text = "Can't Load News",
+                    // show the dynamic error message when available
+                    text = state.errorMessage ?: "Can't Load News",
                     fontSize = 33.sp,
                     fontWeight = FontWeight.SemiBold,
                     color = MaterialTheme.colorScheme.error
@@ -138,10 +136,10 @@ private fun NewsScreen(
                 contentPadding = PaddingValues(bottom = 8.dp),
                 state = listState
             ) {
-                itemsIndexed(
+                items(
                     items = state.articleList,
-                    key = { _, article -> article.articleId }
-                ) { index, article ->
+                    key = { article -> article.articleId }
+                ) { article ->
                     ArticleItem(
                         article = article,
                         onArticleClick = onArticleClick
@@ -219,6 +217,18 @@ private fun NewsScreenPreview() {
     NewsDataTheme {
         NewsScreen(
             state = NewsState(),
+            onAction = {},
+            onArticleClick = {}
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun NewsScreenErrorPreview() {
+    NewsDataTheme {
+        NewsScreen(
+            state = NewsState(isError = true, errorMessage = "Preview: Can't load news"),
             onAction = {},
             onArticleClick = {}
         )

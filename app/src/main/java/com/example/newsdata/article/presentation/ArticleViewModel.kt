@@ -63,7 +63,8 @@ class ArticleViewModel(
                         // If the request fails, update the UI to reflect the error
                     is NewsResult.Error -> state.copy(
                         isLoading = false,
-                        isError = true
+                        isError = true,
+                        errorMessage = articleResult.message ?: "Can't load article"
                     )
                 }
             }
