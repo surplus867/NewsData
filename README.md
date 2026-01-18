@@ -1,25 +1,47 @@
-# News App (Android)
+# 📰 News App (Android)
 
 ## Overview
-A modern Android news application built with Kotlin and Jetpack Compose. The app fetches and displays news articles from a remote API, with local caching for offline access.
+A modern Android news application built with **Kotlin** and **Jetpack Compose**.  
+The app fetches and displays news articles from a remote API and supports **offline access** through local caching.
 
-## Tech Stack
+This project focuses on clean architecture, scalability, and modern Android development best practices.
+
+---
+
+## ✨ Features
+- Latest news feed
+- Article details screen
+- Offline caching using Room
+- Loading, empty, and error state handling
+- Clean and modular architecture
+- Responsive UI built with Jetpack Compose
+
+---
+
+## 🛠 Tech Stack
 - Kotlin
 - Jetpack Compose
 - MVVM Architecture
 - Room Database
 - Repository Pattern
-- Coroutines / Flow
+- Coroutines & Flow
 
-## Features
-- Latest news feed
-- Article details screen
-- Offline caching with Room
-- Loading and error state handling
-- Clean and modular architecture
+---
 
-## How to Run
-1. Clone the repository
-2. Open in Android Studio
-3. Sync Gradle
-4. Run on emulator or device
+## 📱 Screenshots
+
+> Screenshots below demonstrate the main UI flows of the application.
+
+### 🗞 News Feed
+![News Feed](screenshots/news_feed.png)
+
+### 📄 Article Details
+![Article Details](screenshots/article_details.png)
+
+---
+
+## 🚀 How to Run
+1. Clone the repository  
+2. Open the project in **Android Studio**  
+3. Sync Gradle  
+4. Run on an emulator or physical device
