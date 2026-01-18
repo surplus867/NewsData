@@ -30,13 +30,12 @@ This project focuses on clean architecture, scalability, and modern Android deve
 
 ## 📱 Screenshots
 
-> Screenshots below demonstrate the main UI flows of the application.
+### News Feed
+![News Feed](news_feed_1.png)
 
-### 🗞 News Feed
-![News Feed](screenshots/news_feed.png)
+### Article Details
+![Article Details](article_details_1.png)
 
-### 📄 Article Details
-![Article Details](screenshots/article_details.png)
 
 ---
 
