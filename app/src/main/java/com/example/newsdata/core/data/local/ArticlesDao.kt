@@ -11,11 +11,11 @@ interface ArticlesDao {
     suspend fun getArticleList(): List<ArticleEntity>
 
     @Upsert
-    suspend fun upsertArticleList(articleList: List<ArticleEntity>)
+    suspend fun upsertArticleList(articleList: List<ArticleEntity>): LongArray
 
     @Query("SELECT * FROM articleentity WHERE articleID = :articleId")
     suspend fun getArticle(articleId: String): ArticleEntity?
 
     @Query("DELETE FROM articleentity")
-    suspend fun clearDatabase()
+    suspend fun clearDatabase(): Int
 }
